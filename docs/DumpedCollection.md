@@ -1,0 +1,13 @@
+# DumpedCollection
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Collection** | [**Collection**](Collection.md) |  | [optional] 
+**Devices** | [**[]DumpedDevice**](DumpedDevice.md) |  | [optional] 
+**Outputs** | [**[]Output**](Output.md) |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
