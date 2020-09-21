@@ -34,25 +34,25 @@ type DataStream interface {
 
 // NewCollectionDataStream creates a live data stream for devices in a
 // collection. The context must contain the appropriate credentials.
-func NewCollectionDataStream(ctx context.Context, config *Configuration, c Collection) (DataStream, error) {
+func NewCollectionDataStream(ctx context.Context, config *Configuration, collectionID string) (DataStream, error) {
 	scheme := "wss"
 	if config.Scheme == "http" {
 		scheme = "ws"
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/from", scheme, config.Host, c.CollectionId)
+	urlStr := fmt.Sprintf("%s://%s/collections/%s/from", scheme, config.Host, collectionID)
 	return newDataStream(ctx, urlStr)
 }
 
 // NewDeviceDataStream creates a live data stream for a single device. The
 // context must contain the appropriate credentials.
-func NewDeviceDataStream(ctx context.Context, config *Configuration, d Device) (DataStream, error) {
+func NewDeviceDataStream(ctx context.Context, config *Configuration, collectionID, deviceID string) (DataStream, error) {
 	scheme := "wss"
 	if config.Scheme == "http" {
 		scheme = "ws"
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/devices/%s/from", scheme, config.Host, d.CollectionId, d.DeviceId)
+	urlStr := fmt.Sprintf("%s://%s/collections/%s/devices/%s/from", scheme, config.Host, collectionID, deviceID)
 	return newDataStream(ctx, urlStr)
 }
 

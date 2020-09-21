@@ -40,8 +40,6 @@ func main() {
 	// be useful if you are wondering what is happening.
 	config.Debug = false
 
-	client := spanclient.NewAPIClient(config)
-
 	// In the Real World this context should also have a context.WithTimeout
 	// call to ensure we time out if there's no response.
 	ctx := context.WithValue(context.Background(),
@@ -53,13 +51,7 @@ func main() {
 
 	if deviceID != "" {
 		fmt.Println("Will read device data stream from device ", deviceID)
-		device, _, err := client.DevicesApi.RetrieveDevice(ctx, collectionID, deviceID)
-		if err != nil {
-			fmt.Println("Error retrieving device: ", err.Error())
-			return
-		}
-
-		ds, err := spanclient.NewDeviceDataStream(ctx, config, device)
+		ds, err := spanclient.NewDeviceDataStream(ctx, config, collectionID, deviceID)
 		if err != nil {
 			fmt.Println("Error connecting data stream: ", err.Error())
 			return
@@ -69,12 +61,7 @@ func main() {
 	}
 
 	fmt.Println("Will read collection data stream from collection ", collectionID)
-	collection, _, err := client.CollectionsApi.RetrieveCollection(ctx, collectionID)
-	if err != nil {
-		fmt.Println("Error retrieving collection: ", err.Error())
-		return
-	}
-	ds, err := spanclient.NewCollectionDataStream(ctx, config, collection)
+	ds, err := spanclient.NewCollectionDataStream(ctx, config, collectionID)
 	if err != nil {
 		fmt.Println("Error connecting data stream: ", err.Error())
 		return
