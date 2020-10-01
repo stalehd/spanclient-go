@@ -32,9 +32,9 @@ func main() {
 	}
 
 	config := spanclient.NewConfiguration()
-	config.Host = "127.0.0.1:8080"
-	config.BasePath = ""
-	config.Scheme = "http"
+	config.Host = "api.lab5e.com"
+	config.BasePath = "/span"
+	config.Scheme = "https"
 
 	// Set this to true to list the requests and responses in the client. It can
 	// be useful if you are wondering what is happening.
