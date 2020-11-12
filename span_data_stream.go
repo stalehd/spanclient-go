@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/websocket"
@@ -40,7 +41,8 @@ func NewCollectionDataStream(ctx context.Context, config *Configuration, collect
 		scheme = "ws"
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/from", scheme, config.Host, collectionID)
+	urlStr := fmt.Sprintf("%s://%s/collections/%s/from", scheme, config.BasePath, collectionID)
+	log.Printf("### urlStr='%s'", urlStr)
 	return newDataStream(ctx, urlStr)
 }
 
@@ -52,7 +54,8 @@ func NewDeviceDataStream(ctx context.Context, config *Configuration, collectionI
 		scheme = "ws"
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/devices/%s/from", scheme, config.Host, collectionID, deviceID)
+	urlStr := fmt.Sprintf("%s://%s/collections/%s/devices/%s/from", scheme, config.BasePath, collectionID, deviceID)
+	log.Printf("### urlStr='%s'", urlStr)
 	return newDataStream(ctx, urlStr)
 }
 
