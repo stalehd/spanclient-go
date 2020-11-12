@@ -2,6 +2,7 @@ package spanclient
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -112,11 +113,19 @@ type wsDataStream struct {
 
 func (d *wsDataStream) Recv() (OutputDataMessage, error) {
 	for {
-		m := OutputDataMessage{}
-		err := d.ws.ReadJSON(&m)
+		msgType, msgBytes, err := d.ws.ReadMessage()
 		if err != nil {
 			return OutputDataMessage{}, err
 		}
+
+		log.Printf("### msgType=%d, msgBytes='%s'", msgType, string(msgBytes))
+
+		m := OutputDataMessage{}
+		err = json.Unmarshal(msgBytes, &m)
+		if err != nil {
+			return OutputDataMessage{}, err
+		}
+
 		if m.Type == DATA {
 			return m, nil
 		}
