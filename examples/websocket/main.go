@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/lab5e/spanclient-go"
+	"github.com/lab5e/spanclient-go/v4"
 )
 
 func main() {

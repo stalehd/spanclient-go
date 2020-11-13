@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/antihax/optional"
-	"github.com/lab5e/spanclient-go"
+	"github.com/lab5e/spanclient-go/v4"
 )
 
 func timeToMilliseconds(t time.Time) int64 {
