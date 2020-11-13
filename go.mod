@@ -1,4 +1,4 @@
-module github.com/lab5e/spanclient-go
+module github.com/lab5e/spanclient-go/v4
 
 go 1.15
 
