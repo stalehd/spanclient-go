@@ -70,15 +70,9 @@ func remapURL(config *Configuration) (string, error) {
 		return "", err
 	}
 
-	scheme := ""
-
-	switch url.Scheme {
-	case "http":
+	scheme := "wss"
+	if url.Scheme == "http" {
 		scheme = "ws"
-	case "https":
-		scheme = "wss"
-	default:
-		scheme = "wss"
 	}
 
 	url.Scheme = scheme
@@ -117,8 +111,6 @@ func (d *wsDataStream) Recv() (OutputDataMessage, error) {
 		if err != nil {
 			return OutputDataMessage{}, err
 		}
-
-		log.Printf("### msgType=%d, msgBytes='%s'", msgType, string(msgBytes))
 
 		m := OutputDataMessage{}
 		err = json.Unmarshal(msgBytes, &m)
