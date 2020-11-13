@@ -2,9 +2,12 @@ package spanclient
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
+	"net/url"
 
 	"github.com/gorilla/websocket"
 )
@@ -35,25 +38,46 @@ type DataStream interface {
 // NewCollectionDataStream creates a live data stream for devices in a
 // collection. The context must contain the appropriate credentials.
 func NewCollectionDataStream(ctx context.Context, config *Configuration, collectionID string) (DataStream, error) {
-	scheme := "wss"
-	if config.Scheme == "http" {
-		scheme = "ws"
+	wsURL, err := remapURL(config)
+	if err != nil {
+		return nil, err
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/from", scheme, config.Host, collectionID)
+	urlStr := fmt.Sprintf("%s/collections/%s/from", wsURL, collectionID)
+	log.Printf("### urlStr='%s'", urlStr)
 	return newDataStream(ctx, urlStr)
 }
 
 // NewDeviceDataStream creates a live data stream for a single device. The
 // context must contain the appropriate credentials.
 func NewDeviceDataStream(ctx context.Context, config *Configuration, collectionID, deviceID string) (DataStream, error) {
+	wsURL, err := remapURL(config)
+	if err != nil {
+		return nil, err
+	}
+
+	urlStr := fmt.Sprintf("%s/collections/%s/devices/%s/from", wsURL, collectionID, deviceID)
+	log.Printf("### urlStr='%s'", urlStr)
+	return newDataStream(ctx, urlStr)
+}
+
+// remapURL is a (hopefully) a temporary fix to get around the
+// confusion about what Scheme, Host and BasePath are supposed to be
+// in Configuration
+func remapURL(config *Configuration) (string, error) {
+	url, err := url.Parse(config.BasePath)
+	if err != nil {
+		return "", err
+	}
+
 	scheme := "wss"
-	if config.Scheme == "http" {
+	if url.Scheme == "http" {
 		scheme = "ws"
 	}
 
-	urlStr := fmt.Sprintf("%s://%s/collections/%s/devices/%s/from", scheme, config.Host, collectionID, deviceID)
-	return newDataStream(ctx, urlStr)
+	url.Scheme = scheme
+
+	return url.String(), nil
 }
 
 func newDataStream(ctx context.Context, urlStr string) (DataStream, error) {
@@ -83,11 +107,19 @@ type wsDataStream struct {
 
 func (d *wsDataStream) Recv() (OutputDataMessage, error) {
 	for {
-		m := OutputDataMessage{}
-		err := d.ws.ReadJSON(&m)
+		msgType, msgBytes, err := d.ws.ReadMessage()
 		if err != nil {
 			return OutputDataMessage{}, err
 		}
+
+		log.Printf("### msgType=%d, msgBytes='%s'", msgType, string(msgBytes))
+
+		m := OutputDataMessage{}
+		err = json.Unmarshal(msgBytes, &m)
+		if err != nil {
+			return OutputDataMessage{}, err
+		}
+
 		if m.Type == DATA {
 			return m, nil
 		}
