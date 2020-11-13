@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 
@@ -44,7 +43,6 @@ func NewCollectionDataStream(ctx context.Context, config *Configuration, collect
 	}
 
 	urlStr := fmt.Sprintf("%s/collections/%s/from", wsURL, collectionID)
-	log.Printf("### urlStr='%s'", urlStr)
 	return newDataStream(ctx, urlStr)
 }
 
@@ -106,12 +104,10 @@ type wsDataStream struct {
 
 func (d *wsDataStream) Recv() (OutputDataMessage, error) {
 	for {
-		msgType, msgBytes, err := d.ws.ReadMessage()
+		_, msgBytes, err := d.ws.ReadMessage()
 		if err != nil {
 			return OutputDataMessage{}, err
 		}
-
-		log.Printf("### msgType=%d, msgBytes='%s'", msgType, string(msgBytes))
 
 		m := OutputDataMessage{}
 		err = json.Unmarshal(msgBytes, &m)
