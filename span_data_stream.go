@@ -112,6 +112,8 @@ func (d *wsDataStream) Recv() (OutputDataMessage, error) {
 			return OutputDataMessage{}, err
 		}
 
+		log.Printf("### msgType=%d, msgBytes='%s'", msgType, string(msgBytes))
+
 		m := OutputDataMessage{}
 		err = json.Unmarshal(msgBytes, &m)
 		if err != nil {
