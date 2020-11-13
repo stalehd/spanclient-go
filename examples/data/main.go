@@ -10,6 +10,10 @@ import (
 	"github.com/lab5e/spanclient-go"
 )
 
+func timeToMilliseconds(t time.Time) int64 {
+	return t.UnixNano() / int64(time.Millisecond)
+}
+
 func main() {
 	// It's always a good idea to leave authentication tokens out of the source
 	// code so we use a command line parameter here.
@@ -27,9 +31,6 @@ func main() {
 	}
 
 	config := spanclient.NewConfiguration()
-	config.Host = "api.lab5e.com"
-	config.BasePath = "/span"
-	config.Scheme = "https"
 
 	// Set this to true to list the requests and responses in the client. It can
 	// be useful if you are wondering what is happening.
@@ -57,8 +58,8 @@ func main() {
 
 	options := &spanclient.ListCollectionDataOpts{
 		Limit: optional.NewInt32(10),
-		Start: optional.NewString("0"),
-		End:   optional.NewString(fmt.Sprintf("%d", time.Now().UnixNano())),
+		Start: optional.NewString(fmt.Sprintf("%d", timeToMilliseconds(time.Now().Add(-1*time.Hour)))),
+		End:   optional.NewString(fmt.Sprintf("%d", timeToMilliseconds(time.Now()))),
 	}
 	items, _, err := client.CollectionsApi.ListCollectionData(ctx, collection.CollectionId, options)
 	if err != nil {

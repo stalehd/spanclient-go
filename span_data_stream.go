@@ -57,7 +57,6 @@ func NewDeviceDataStream(ctx context.Context, config *Configuration, collectionI
 	}
 
 	urlStr := fmt.Sprintf("%s/collections/%s/devices/%s/from", wsURL, collectionID, deviceID)
-	log.Printf("### urlStr='%s'", urlStr)
 	return newDataStream(ctx, urlStr)
 }
 
