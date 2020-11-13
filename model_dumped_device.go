@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 3.0.0
+ * API version: 4.0.8 freckled-fawn
  * Contact: dev@lab5e.com
  */
 

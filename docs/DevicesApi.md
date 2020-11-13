@@ -110,8 +110,8 @@ Name | Type | Description  | Notes
 
 
  **limit** | **optional.Int32**| Limit the number of payloads to return. The default is 512. | 
- **start** | **optional.String**| Start of time range. The default is 24 hours ago. | 
- **end** | **optional.String**| End of time range. The default is the current time stamp. | 
+ **start** | **optional.String**| Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. | 
+ **end** | **optional.String**| End of time range. The default is the current time stamp. Value is in milliseconds since epoch. | 
 
 ### Return type
 

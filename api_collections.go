@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 3.0.0
+ * API version: 4.0.8 freckled-fawn
  * Contact: dev@lab5e.com
  */
 
@@ -546,8 +546,8 @@ List the data received from all the devices in the collection.
  * @param collectionId The collection ID requested. This is included in the request path.
  * @param optional nil or *ListCollectionDataOpts - Optional Parameters:
  * @param "Limit" (optional.Int32) -  Limit the number of payloads to return. The default is 512.
- * @param "Start" (optional.String) -  Start of time range. The default is 24 hours ago.
- * @param "End" (optional.String) -  End of time range. The default is the current time stamp.
+ * @param "Start" (optional.String) -  Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch.
+ * @param "End" (optional.String) -  End of time range. The default is the current time stamp. Value is in milliseconds since epoch.
 @return ListDataResponse
 */
 func (a *CollectionsApiService) ListCollectionData(ctx _context.Context, collectionId string, localVarOptionals *ListCollectionDataOpts) (ListDataResponse, *_nethttp.Response, error) {

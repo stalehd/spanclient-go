@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 3.0.0
+ * API version: 4.0.8 freckled-fawn
  * Contact: dev@lab5e.com
  */
 
@@ -41,7 +41,7 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the The Span API API v3.0.0
+// APIClient manages communication with the The Span API API v4.0.8 freckled-fawn
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -59,13 +59,7 @@ type APIClient struct {
 
 	OutputsApi *OutputsApiService
 
-	ProfileApi *ProfileApiService
-
 	SystemApi *SystemApiService
-
-	TeamsApi *TeamsApiService
-
-	TokensApi *TokensApiService
 }
 
 type service struct {
@@ -89,10 +83,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DevicesApi = (*DevicesApiService)(&c.common)
 	c.FotaApi = (*FotaApiService)(&c.common)
 	c.OutputsApi = (*OutputsApiService)(&c.common)
-	c.ProfileApi = (*ProfileApiService)(&c.common)
 	c.SystemApi = (*SystemApiService)(&c.common)
-	c.TeamsApi = (*TeamsApiService)(&c.common)
-	c.TokensApi = (*TokensApiService)(&c.common)
 
 	return c
 }

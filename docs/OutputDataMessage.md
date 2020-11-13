@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Type** | [**OutputDataMessageOutputMessageType**](OutputDataMessageOutputMessageType.md) |  | [optional] 
 **Device** | [**Device**](Device.md) |  | [optional] 
 **Payload** | **string** |  | [optional] 
-**Received** | **string** |  | [optional] 
+**Received** | **string** | Received time for message. Value is ms since epoch. | [optional] 
 **Transport** | **string** |  | [optional] 
 **UdpMetaData** | [**UdpMetadata**](UDPMetadata.md) |  | [optional] 
 **CoapMetaData** | [**CoApMetadata**](CoAPMetadata.md) |  | [optional] 

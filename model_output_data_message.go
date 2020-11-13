@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 3.0.0
+ * API version: 4.0.8 freckled-fawn
  * Contact: dev@lab5e.com
  */
 
@@ -15,6 +15,7 @@ type OutputDataMessage struct {
 	Type OutputDataMessageOutputMessageType `json:"type,omitempty"`
 	Device Device `json:"device,omitempty"`
 	Payload string `json:"payload,omitempty"`
+	// Received time for message. Value is ms since epoch.
 	Received string `json:"received,omitempty"`
 	Transport string `json:"transport,omitempty"`
 	UdpMetaData UdpMetadata `json:"udpMetaData,omitempty"`

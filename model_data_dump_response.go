@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 3.0.0
+ * API version: 4.0.8 freckled-fawn
  * Contact: dev@lab5e.com
  */
 
@@ -13,7 +13,4 @@ package spanclient
 // DataDumpResponse struct for DataDumpResponse
 type DataDumpResponse struct {
 	Collections []DumpedCollection `json:"collections,omitempty"`
-	Profile UserProfile `json:"profile,omitempty"`
-	Teams []Team `json:"teams,omitempty"`
-	Tokens []Token `json:"tokens,omitempty"`
 }
