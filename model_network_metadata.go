@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 4.0.8 freckled-fawn
+ * API version: 4.0.11 ambulant-epsie
  * Contact: dev@lab5e.com
  */
 
