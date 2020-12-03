@@ -1,18 +1,12 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
-	"time"
 
 	"github.com/antihax/optional"
 	"github.com/lab5e/spanclient-go/v4"
 )
-
-func timeToMilliseconds(t time.Time) int64 {
-	return t.UnixNano() / int64(time.Millisecond)
-}
 
 func main() {
 	// It's always a good idea to leave authentication tokens out of the source
@@ -40,12 +34,7 @@ func main() {
 
 	// In the Real World this context should also have a context.WithTimeout
 	// call to ensure we time out if there's no response.
-	ctx := context.WithValue(context.Background(),
-		spanclient.ContextAPIKey,
-		spanclient.APIKey{
-			Key:    token,
-			Prefix: "",
-		})
+	ctx := spanclient.NewAuthContext(token)
 
 	collection, _, err := client.CollectionsApi.RetrieveCollection(ctx, collectionID)
 	if err != nil {
@@ -56,10 +45,9 @@ func main() {
 	fmt.Println("Data from collection ", collection.CollectionId)
 	fmt.Println("======================================")
 
+	// This will retrieve the last 10 payloads from the service.
 	options := &spanclient.ListCollectionDataOpts{
 		Limit: optional.NewInt32(10),
-		Start: optional.NewString(fmt.Sprintf("%d", timeToMilliseconds(time.Now().Add(-1*time.Hour)))),
-		End:   optional.NewString(fmt.Sprintf("%d", timeToMilliseconds(time.Now()))),
 	}
 	items, _, err := client.CollectionsApi.ListCollectionData(ctx, collection.CollectionId, options)
 	if err != nil {
