@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/antihax/optional"
-	"github.com/lab5e/spanclient-go"
+	"github.com/lab5e/spanclient-go/v4"
 )
 
 // This example shows you how to retrieve payloads in a time interval. It's

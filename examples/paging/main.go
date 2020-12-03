@@ -7,7 +7,7 @@ import (
 	"text/tabwriter"
 
 	"github.com/antihax/optional"
-	"github.com/lab5e/spanclient-go"
+	"github.com/lab5e/spanclient-go/v4"
 )
 
 // This example demonstrates how to page through the data/payloads from devices.
