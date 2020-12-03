@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 4.0.11 ambulant-epsie
+ * API version: 4.1.3 factual-kahlil
  * Contact: dev@lab5e.com
  */
 
@@ -537,6 +537,7 @@ type ListCollectionDataOpts struct {
     Limit optional.Int32
     Start optional.String
     End optional.String
+    Offset optional.String
 }
 
 /*
@@ -548,6 +549,7 @@ List the data received from all the devices in the collection.
  * @param "Limit" (optional.Int32) -  Limit the number of payloads to return. The default is 512.
  * @param "Start" (optional.String) -  Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch.
  * @param "End" (optional.String) -  End of time range. The default is the current time stamp. Value is in milliseconds since epoch.
+ * @param "Offset" (optional.String) -  The message offset based on the message ID. This parameter can't be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned.
 @return ListDataResponse
 */
 func (a *CollectionsApiService) ListCollectionData(ctx _context.Context, collectionId string, localVarOptionals *ListCollectionDataOpts) (ListDataResponse, *_nethttp.Response, error) {
@@ -576,6 +578,9 @@ func (a *CollectionsApiService) ListCollectionData(ctx _context.Context, collect
 	}
 	if localVarOptionals != nil && localVarOptionals.End.IsSet() {
 		localVarQueryParams.Add("end", parameterToString(localVarOptionals.End.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Offset.IsSet() {
+		localVarQueryParams.Add("offset", parameterToString(localVarOptionals.Offset.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

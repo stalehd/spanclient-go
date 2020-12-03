@@ -145,6 +145,7 @@ Name | Type | Description  | Notes
  **limit** | **optional.Int32**| Limit the number of payloads to return. The default is 512. | 
  **start** | **optional.String**| Start of time range. The default is 24 hours ago. Value is in milliseconds since epoch. | 
  **end** | **optional.String**| End of time range. The default is the current time stamp. Value is in milliseconds since epoch. | 
+ **offset** | **optional.String**| The message offset based on the message ID. This parameter can&#39;t be combined with the start and end parameters. If no parameter is set the first N messages will be returned. If this parameter is set the next N messages (from newest to oldest) with message ID less than the offset will be returned. | 
 
 ### Return type
 

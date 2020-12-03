@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 4.0.11 ambulant-epsie
+ * API version: 4.1.3 factual-kahlil
  * Contact: dev@lab5e.com
  */
 

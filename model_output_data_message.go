@@ -3,7 +3,7 @@
  *
  * API for device, collection, output and firmware management
  *
- * API version: 4.0.11 ambulant-epsie
+ * API version: 4.1.3 factual-kahlil
  * Contact: dev@lab5e.com
  */
 
@@ -20,4 +20,5 @@ type OutputDataMessage struct {
 	Transport string `json:"transport,omitempty"`
 	UdpMetaData UdpMetadata `json:"udpMetaData,omitempty"`
 	CoapMetaData CoApMetadata `json:"coapMetaData,omitempty"`
+	MessageId string `json:"messageId,omitempty"`
 }
